@@ -1,9 +1,15 @@
 #!/bin/bash
 
-# Install dependencies
+# Install Python dependencies
+echo "Installing dependencies..."
+pip install --upgrade pip
 pip install -r requirements.txt
 
-# Run Django collectstatic to gather all static files
-python manage.py collectstatic --noinput --settings=PyChat.settings
+# Collect static files
+python manage.py collectstatic --noinput
 
-# Done
+# Run migrations (if any)
+python manage.py migrate --noinput
+
+# Create the necessary directories for static files
+mkdir -p staticfiles_build
