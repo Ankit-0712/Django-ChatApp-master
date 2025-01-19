@@ -1,15 +1,22 @@
 #!/bin/bash
 
-# Install Python dependencies
-echo "Installing dependencies..."
-pip install --upgrade pip
-pip install -r requirements.txt
+# Check if python3 and pip are installed
+echo "Checking for python3 and pip..."
+which python3 || echo "python3 not found, installing..."
+which pip || echo "pip not found, installing..."
 
-# Collect static files
-python manage.py collectstatic --noinput
+# Install the required Python dependencies
+echo "Installing Python dependencies..."
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
 
-# Run migrations (if any)
-python manage.py migrate --noinput
+# Collect static files (for Django)
+echo "Collecting static files..."
+python3 manage.py collectstatic --noinput
 
-# Create the necessary directories for static files
+# Run migrations (if needed)
+echo "Running migrations..."
+python3 manage.py migrate --noinput
+
+# Create static files directory (if missing)
 mkdir -p staticfiles_build
